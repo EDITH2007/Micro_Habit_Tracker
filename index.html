@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Streak Guardian — Micro-Habit Tracker</title>
+  <meta name="description" content="A micro-habit tracker with a virtual pixel-art Streak Guardian pet that reacts to your daily habit consistency.">
+  
+  <!-- Google Fonts: Outfit for clean UI, VT323 for retro pixel text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Particle / Confetti Canvas Layer -->
+  <div id="particle-container" aria-hidden="true"></div>
+
+  <div class="app-wrapper">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <span class="brand-icon">✨</span>
+        <h1 class="brand-title">Streak Guardian</h1>
+      </div>
+      
+      <div class="header-actions">
+        <button id="btn-info" class="icon-btn" title="How it works" aria-label="How it works">❓</button>
+        <button id="btn-edit-habits" class="icon-btn hidden" title="Edit Habits & Pet" aria-label="Edit Habits & Pet">⚙️</button>
+        <button id="btn-reset" class="icon-btn hidden" title="Reset Progress" aria-label="Reset Progress">🔄</button>
+      </div>
+    </header>
+
+    <!-- Onboarding / Setup View -->
+    <main id="setup-view" class="view-section">
+      <div class="setup-card glass-card">
+        <div class="setup-header">
+          <div class="setup-badge">Welcome!</div>
+          <h2>Nurture Your Micro-Habits</h2>
+          <p class="setup-description">
+            Build consistency with 1–3 tiny daily habits. Your <strong>Streak Guardian</strong> virtual pet thrives when you stay consistent!
+          </p>
+        </div>
+
+        <div class="onboarding-tooltip">
+          <span class="tooltip-icon">💡</span>
+          <div>
+            <strong>How the Guardian works:</strong>
+            <p>Your pet's mood evolves as your average streak grows. Keep your habits completed daily to unlock happier, thriving forms!</p>
+          </div>
+        </div>
+
+        <form id="setup-form" autocomplete="off">
+          <div class="form-group">
+            <label for="pet-name-input">Name Your Streak Guardian</label>
+            <input type="text" id="pet-name-input" maxlength="15" placeholder="e.g. Spark, Bimble, Pixel" required value="Spark">
+          </div>
+
+          <div class="form-group">
+            <label>Add 1 to 3 Micro-Habits</label>
+            <p class="input-hint">Keep them small & achievable! (e.g. "Coded for 15m", "Drank 2L water")</p>
+            
+            <!-- Habit Preset Quick Buttons -->
+            <div class="presets-wrapper">
+              <span class="preset-label">Quick Ideas:</span>
+              <button type="button" class="preset-tag" data-preset="⚡ Coded for 15 mins">⚡ Code 15m</button>
+              <button type="button" class="preset-tag" data-preset="💧 Drank 2L water">💧 Drink Water</button>
+              <button type="button" class="preset-tag" data-preset="📖 Read 5 pages">📖 Read 5 Pages</button>
+              <button type="button" class="preset-tag" data-preset="🧘 Meditated 5 mins">🧘 Meditate</button>
+              <button type="button" class="preset-tag" data-preset="🏃 Walked 15 mins">🏃 Walk 15m</button>
+            </div>
+
+            <div id="setup-habits-list" class="setup-habits-inputs">
+              <div class="habit-input-row">
+                <input type="text" class="setup-habit-input" placeholder="Habit 1 (required)" maxlength="35" required value="⚡ Coded for 15 mins">
+              </div>
+              <div class="habit-input-row">
+                <input type="text" class="setup-habit-input" placeholder="Habit 2 (optional)" maxlength="35" value="💧 Drank 2L of water">
+              </div>
+              <div class="habit-input-row">
+                <input type="text" class="setup-habit-input" placeholder="Habit 3 (optional)" maxlength="35" value="📖 Read 5 pages">
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary btn-large">
+            <span>Adopt & Begin Tracking</span> 🚀
+          </button>
+        </form>
+      </div>
+    </main>
+
+    <!-- Main Tracker View -->
+    <main id="tracker-view" class="view-section hidden">
+      
+      <!-- Centerpiece Guardian Section -->
+      <section class="guardian-stage glass-card" id="guardian-card">
+        <div class="stage-header">
+          <span id="pet-mood-badge" class="mood-badge mood-okay">Mood: Okay</span>
+          <span id="pet-level-badge" class="level-badge">Lvl 1 • Guardian</span>
+        </div>
+
+        <!-- Speech Bubble Dialogue -->
+        <div class="speech-bubble-container">
+          <div id="speech-bubble" class="speech-bubble">
+            <p id="speech-text">Hello! Ready to accomplish great things today?</p>
+          </div>
+        </div>
+
+        <!-- Pixel Art Pet Stage -->
+        <div id="pet-display-wrapper" class="pet-display-wrapper" title="Click me for love!" tabIndex="0" role="button" aria-label="Streak Guardian Pet">
+          <!-- Pixel Pet Canvas / CSS Sprite Grid rendered dynamically -->
+          <div id="pet-display" class="pixel-pet pet-stage-1">
+            <div class="pet-aura" id="pet-aura"></div>
+            <div class="pet-body-grid" id="pet-grid"></div>
+            <div class="pet-shadow"></div>
+          </div>
+        </div>
+
+        <div class="pet-info-footer">
+          <h2 id="display-pet-name" class="pet-name">Spark</h2>
+          <div class="pet-health-bar-container" title="Average streak health">
+            <div class="health-label">Streak Health</div>
+            <div class="health-track">
+              <div id="health-bar-fill" class="health-fill" style="width: 30%;"></div>
+            </div>
+            <div id="health-percent" class="health-percent-text">30%</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Habits Check-in List -->
+      <section class="habits-section">
+        <div class="section-header">
+          <h3>Daily Micro-Habits</h3>
+          <span id="today-date-badge" class="date-badge">Today</span>
+        </div>
+
+        <div id="habits-list" class="habits-list">
+          <!-- Habit Cards injected dynamically via script.js -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Micro-Habit Tracker with Streak Guardian • Local Data Persisted</p>
+    </footer>
+  </div>
+
+  <!-- MODAL: Edit Habits & Pet -->
+  <div id="modal-edit" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-content glass-card">
+      <div class="modal-header">
+        <h3>⚙️ Edit Guardian & Habits</h3>
+        <button class="modal-close" id="close-edit-modal">&times;</button>
+      </div>
+      <form id="edit-form">
+        <div class="form-group">
+          <label for="edit-pet-name">Pet Name</label>
+          <input type="text" id="edit-pet-name" maxlength="15" required>
+        </div>
+
+        <div class="form-group">
+          <label>Your Habits (Max 3)</label>
+          <div id="edit-habits-inputs" class="edit-habits-list">
+            <!-- Edit rows injected dynamically -->
+          </div>
+          <button type="button" id="btn-add-edit-habit" class="btn-secondary btn-small" style="margin-top: 8px;">
+            + Add Habit
+          </button>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" id="cancel-edit-modal">Cancel</button>
+          <button type="submit" class="btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: Reset Progress Confirmation -->
+  <div id="modal-reset" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-content glass-card modal-small">
+      <div class="modal-header">
+        <h3>🔄 Reset All Progress?</h3>
+        <button class="modal-close" id="close-reset-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>This will erase your habits, current streaks, and reset <strong><span id="reset-pet-name">Spark</span></strong> back to adoption state.</p>
+        <p class="warning-text">⚠️ This action cannot be undone!</p>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="cancel-reset-modal">Cancel</button>
+        <button type="button" class="btn-danger" id="confirm-reset-btn">Reset Everything</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: Info / How It Works -->
+  <div id="modal-info" class="modal-overlay hidden" aria-hidden="true">
+    <div class="modal-content glass-card">
+      <div class="modal-header">
+        <h3>❓ How Streak Guardian Works</h3>
+        <button class="modal-close" id="close-info-modal">&times;</button>
+      </div>
+      <div class="modal-body info-body">
+        <div class="info-item">
+          <div class="info-icon">🌱</div>
+          <div>
+            <h4>Consistency > Intensity</h4>
+            <p>Track 1 to 3 micro-habits daily. Micro-habits are intentionally small so you can maintain streaks even on tough days.</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">👾</div>
+          <div>
+            <h4>Pet Mood Evolution</h4>
+            <p>Your Guardian's stage reflects your overall average streak strength:</p>
+            <ul class="pet-stages-legend">
+              <li><span class="legend-badge stage-0">Sleepy</span> 0-day avg streak (Missed days)</li>
+              <li><span class="legend-badge stage-1">Okay</span> 1-2 day avg streak (Getting started)</li>
+              <li><span class="legend-badge stage-2">Happy</span> 3-6 day avg streak (Building momentum)</li>
+              <li><span class="legend-badge stage-3">Excited</span> 7-11 day avg streak (1 week strong!)</li>
+              <li><span class="legend-badge stage-4">Thriving</span> 12+ day avg streak (Legendary status ✨)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">🛡️</div>
+          <div>
+            <h4>Fair Drop System</h4>
+            <p>Skipping a day reduces your average streak health, but doesn't punish you instantly to zero if you had a strong streak. Jump back in immediately to boost your pet!</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-primary" id="btn-close-info">Got it!</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

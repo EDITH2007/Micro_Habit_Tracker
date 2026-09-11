@@ -1,92 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-mood="okay">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Streak Guardian — Micro-Habit Tracker</title>
-  <meta name="description" content="A micro-habit tracker with a virtual pixel-art Streak Guardian pet that reacts to your daily habit consistency.">
+  <title>Streak Guardian — Habit Companion with Bob</title>
+  <meta name="description" content="A playful Tamagotchi-inspired micro-habit tracker companion app. Keep your habits to nurture Bob, your lively Streak Guardian creature!">
   
-  <!-- Google Fonts: Outfit for clean UI, VT323 for retro pixel text -->
+  <!-- Google Fonts: Fredoka for playful companion typography, Plus Jakarta Sans for crisp UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Particle / Confetti Canvas Layer -->
+  <!-- Ambient Dynamic Mood Aura Glow Backdrop -->
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <!-- Particle / Flying XP Sparkle Layer -->
   <div id="particle-container" aria-hidden="true"></div>
 
   <div class="app-wrapper">
     <!-- Header -->
     <header class="app-header">
       <div class="header-brand">
-        <span class="brand-icon">✨</span>
-        <h1 class="brand-title">Streak Guardian</h1>
+        <div class="brand-avatar">
+          <span class="brand-emoji">🐾</span>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">Streak Guardian</h1>
+          <span class="brand-subtitle">Caring for <strong id="header-pet-name">Bob</strong></span>
+        </div>
       </div>
       
       <div class="header-actions">
-        <button id="btn-info" class="icon-btn" title="How it works" aria-label="How it works">❓</button>
-        <button id="btn-edit-habits" class="icon-btn hidden" title="Edit Habits & Pet" aria-label="Edit Habits & Pet">⚙️</button>
-        <button id="btn-reset" class="icon-btn hidden" title="Reset Progress" aria-label="Reset Progress">🔄</button>
+        <button id="btn-sound" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">🔊</button>
+        <button id="btn-info" class="icon-btn" title="How to play" aria-label="How to play">❓</button>
+        <button id="btn-edit-habits" class="icon-btn hidden" title="Edit Habits & Companion" aria-label="Edit Habits & Companion">⚙️</button>
+        <button id="btn-reset" class="icon-btn hidden" title="Reset Sanctuary" aria-label="Reset Sanctuary">🔄</button>
       </div>
     </header>
 
     <!-- Onboarding / Setup View -->
     <main id="setup-view" class="view-section">
-      <div class="setup-card glass-card">
+      <div class="setup-card tactile-card">
         <div class="setup-header">
-          <div class="setup-badge">Welcome!</div>
-          <h2>Nurture Your Micro-Habits</h2>
+          <div class="companion-welcome-avatar">
+            <span class="avatar-egg">🥚</span>
+          </div>
+          <div class="setup-badge">New Companion</div>
+          <h2>Hatch Your Streak Guardian</h2>
           <p class="setup-description">
-            Build consistency with 1–3 tiny daily habits. Your <strong>Streak Guardian</strong> virtual pet thrives when you stay consistent!
+            Consistency is like food for your companion! Choose 1 to 3 tiny daily habits. Every check-in feeds <strong>Bob</strong>, unlocks happy evolutions, and builds your streak.
           </p>
         </div>
 
         <div class="onboarding-tooltip">
-          <span class="tooltip-icon">💡</span>
+          <span class="tooltip-icon">✨</span>
           <div>
-            <strong>How the Guardian works:</strong>
-            <p>Your pet's mood evolves as your average streak grows. Keep your habits completed daily to unlock happier, thriving forms!</p>
+            <strong>Creature Care Rule:</strong>
+            <p>Bob's mood and colors adapt live to your habit streak. Don't let Bob get sleepy—keep the flames ignited!</p>
           </div>
         </div>
 
         <form id="setup-form" autocomplete="off">
           <div class="form-group">
-            <label for="pet-name-input">Name Your Streak Guardian</label>
-            <input type="text" id="pet-name-input" maxlength="15" placeholder="e.g. Spark, Bimble, Pixel" required value="Spark">
+            <label for="pet-name-input">Name Your Companion</label>
+            <input type="text" id="pet-name-input" maxlength="15" placeholder="e.g. Bob, Mochi, Pip" required value="Bob">
           </div>
 
           <div class="form-group">
-            <label>Add 1 to 3 Micro-Habits</label>
-            <p class="input-hint">Keep them small & achievable! (e.g. "Coded for 15m", "Drank 2L water")</p>
+            <label>Pick 1 to 3 Micro-Habits</label>
+            <p class="input-hint">Keep them delightfully small so you never break the streak!</p>
             
             <!-- Habit Preset Quick Buttons -->
             <div class="presets-wrapper">
-              <span class="preset-label">Quick Ideas:</span>
+              <span class="preset-label">Tap to add:</span>
               <button type="button" class="preset-tag" data-preset="⚡ Coded for 15 mins">⚡ Code 15m</button>
-              <button type="button" class="preset-tag" data-preset="💧 Drank 2L water">💧 Drink Water</button>
-              <button type="button" class="preset-tag" data-preset="📖 Read 5 pages">📖 Read 5 Pages</button>
-              <button type="button" class="preset-tag" data-preset="🧘 Meditated 5 mins">🧘 Meditate</button>
+              <button type="button" class="preset-tag" data-preset="💧 Drank 2L water">💧 Drink 2L</button>
+              <button type="button" class="preset-tag" data-preset="📖 Read 5 pages">📖 Read 5 Pgs</button>
+              <button type="button" class="preset-tag" data-preset="🧘 Meditated 5 mins">🧘 Meditate 5m</button>
               <button type="button" class="preset-tag" data-preset="🏃 Walked 15 mins">🏃 Walk 15m</button>
             </div>
 
             <div id="setup-habits-list" class="setup-habits-inputs">
               <div class="habit-input-row">
+                <span class="input-row-icon">⚡</span>
                 <input type="text" class="setup-habit-input" placeholder="Habit 1 (required)" maxlength="35" required value="⚡ Coded for 15 mins">
               </div>
               <div class="habit-input-row">
-                <input type="text" class="setup-habit-input" placeholder="Habit 2 (optional)" maxlength="35" value="💧 Drank 2L of water">
+                <span class="input-row-icon">💧</span>
+                <input type="text" class="setup-habit-input" placeholder="Habit 2 (optional)" maxlength="35" value="💧 Drank 2L water">
               </div>
               <div class="habit-input-row">
+                <span class="input-row-icon">📖</span>
                 <input type="text" class="setup-habit-input" placeholder="Habit 3 (optional)" maxlength="35" value="📖 Read 5 pages">
               </div>
             </div>
           </div>
 
-          <button type="submit" class="btn-primary btn-large">
-            <span>Adopt & Begin Tracking</span> 🚀
+          <button type="submit" class="btn-game-primary btn-large">
+            <span>Hatch & Meet Bob</span> 🚀
           </button>
         </form>
       </div>
@@ -95,46 +110,98 @@
     <!-- Main Tracker View -->
     <main id="tracker-view" class="view-section hidden">
       
-      <!-- Centerpiece Guardian Section -->
-      <section class="guardian-stage glass-card" id="guardian-card">
-        <div class="stage-header">
-          <span id="pet-mood-badge" class="mood-badge mood-okay">Mood: Okay</span>
-          <span id="pet-level-badge" class="level-badge">Lvl 1 • Guardian</span>
+      <!-- HERO: Bob's Sanctuary -->
+      <section class="companion-sanctuary tactile-card" id="guardian-card">
+        
+        <!-- Stage Top Status -->
+        <div class="sanctuary-header">
+          <div class="mood-pill" id="pet-mood-badge">
+            <span class="mood-indicator-dot"></span>
+            <span class="mood-label-text">Mood: Waking</span>
+          </div>
+          <div class="sanctuary-streak-pill" id="pet-level-badge">
+            <span class="streak-icon">🔥</span>
+            <span class="level-label-text">1d Avg • Sprout Stage</span>
+          </div>
         </div>
 
-        <!-- Speech Bubble Dialogue -->
-        <div class="speech-bubble-container">
+        <!-- Bob's Dialogue Bubble -->
+        <div class="speech-bubble-wrapper">
           <div id="speech-bubble" class="speech-bubble">
-            <p id="speech-text">Hello! Ready to accomplish great things today?</p>
+            <p id="speech-text">Good morning! Feed me a completed habit today! ✨</p>
+            <div class="speech-bubble-tail"></div>
           </div>
         </div>
 
-        <!-- Pixel Art Pet Stage -->
-        <div id="pet-display-wrapper" class="pet-display-wrapper" title="Click me for love!" tabIndex="0" role="button" aria-label="Streak Guardian Pet">
-          <!-- Pixel Pet Canvas / CSS Sprite Grid rendered dynamically -->
-          <div id="pet-display" class="pixel-pet pet-stage-1">
-            <div class="pet-aura" id="pet-aura"></div>
-            <div class="pet-body-grid" id="pet-grid"></div>
-            <div class="pet-shadow"></div>
-          </div>
-        </div>
+        <!-- Bob Companion Creature Stage -->
+        <div id="pet-display-wrapper" class="pet-display-wrapper" role="button" tabindex="0" title="Tap Bob to pet & give love!" aria-label="Bob the Streak Guardian">
+          
+          <!-- Atmospheric Halo -->
+          <div class="creature-halo" id="pet-halo"></div>
 
-        <div class="pet-info-footer">
-          <h2 id="display-pet-name" class="pet-name">Spark</h2>
-          <div class="pet-health-bar-container" title="Average streak health">
-            <div class="health-label">Streak Health</div>
-            <div class="health-track">
-              <div id="health-bar-fill" class="health-fill" style="width: 30%;"></div>
+          <!-- Bob's SVG Vector Body Stage -->
+          <div id="pet-display" class="bob-creature stage-1">
+            <div id="pet-svg-container" class="pet-svg-container">
+              <!-- Dynamically populated with Bob's SVG creature -->
             </div>
-            <div id="health-percent" class="health-percent-text">30%</div>
+            <!-- Ground Contact Shadow -->
+            <div class="bob-shadow" id="pet-shadow"></div>
+          </div>
+
+          <!-- Floating Elements (Zzz, sparkles, hearts) -->
+          <div class="floating-effects" id="floating-effects"></div>
+
+          <div class="pet-touch-hint">Tap Bob for love 💖</div>
+        </div>
+
+        <!-- Companion Footer & Creature-Care Meter -->
+        <div class="companion-care-section">
+          <div class="companion-name-row">
+            <h2 id="display-pet-name" class="companion-name">Bob</h2>
+            <span class="companion-title-tag" id="companion-evolution-tag">Friendly Sprout</span>
+          </div>
+
+          <!-- Tactile Vitality Care Vessel -->
+          <div class="vitality-vessel-container">
+            <div class="vessel-label-row">
+              <span class="vessel-title">
+                <span class="vessel-icon">🧪</span>
+                <span>Creature Vitality</span>
+              </span>
+              <span class="vessel-stats">
+                <strong id="health-percent">30%</strong>
+                <span class="vessel-stage-name" id="vitality-tier-name">Sprout</span>
+              </span>
+            </div>
+
+            <!-- Physical Glass Flask / Care Meter -->
+            <div class="vessel-flask">
+              <div class="vessel-glass-shine"></div>
+              <div id="health-bar-fill" class="vessel-liquid-fill" style="width: 30%;">
+                <div class="liquid-wave-sheen"></div>
+                <div class="liquid-bubbles">
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+              <div class="vessel-milestones">
+                <span class="milestone-pin m-0" title="Seed">🌱</span>
+                <span class="milestone-pin m-1" title="Sprout">🌿</span>
+                <span class="milestone-pin m-2" title="Blossom">🌸</span>
+                <span class="milestone-pin m-3" title="Blaze">🔥</span>
+                <span class="milestone-pin m-4" title="Crown">👑</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Habits Check-in List -->
+      <!-- HABITS SECTION: Differentiated Daily Habits -->
       <section class="habits-section">
-        <div class="section-header">
-          <h3>Daily Micro-Habits</h3>
+        <div class="habits-section-header">
+          <div class="habits-header-title">
+            <h3>Daily Micro-Habits</h3>
+            <span id="habits-count-pill" class="habits-count-pill">0/3 Fed to Bob</span>
+          </div>
           <span id="today-date-badge" class="date-badge">Today</span>
         </div>
 
@@ -146,36 +213,36 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-      <p>Micro-Habit Tracker with Streak Guardian • Local Data Persisted</p>
+      <p>Streak Guardian • Keep Bob smiling with 1–3 daily micro-habits ✨</p>
     </footer>
   </div>
 
-  <!-- MODAL: Edit Habits & Pet -->
+  <!-- MODAL: Edit Habits & Companion -->
   <div id="modal-edit" class="modal-overlay hidden" aria-hidden="true">
-    <div class="modal-content glass-card">
+    <div class="modal-content tactile-card">
       <div class="modal-header">
-        <h3>⚙️ Edit Guardian & Habits</h3>
-        <button class="modal-close" id="close-edit-modal">&times;</button>
+        <h3>⚙️ Edit Bob & Habits</h3>
+        <button class="modal-close" id="close-edit-modal" aria-label="Close edit modal">&times;</button>
       </div>
       <form id="edit-form">
         <div class="form-group">
-          <label for="edit-pet-name">Pet Name</label>
-          <input type="text" id="edit-pet-name" maxlength="15" required>
+          <label for="edit-pet-name">Companion Name</label>
+          <input type="text" id="edit-pet-name" maxlength="15" required value="Bob">
         </div>
 
         <div class="form-group">
-          <label>Your Habits (Max 3)</label>
+          <label>Your Daily Habits (Max 3)</label>
           <div id="edit-habits-inputs" class="edit-habits-list">
             <!-- Edit rows injected dynamically -->
           </div>
-          <button type="button" id="btn-add-edit-habit" class="btn-secondary btn-small" style="margin-top: 8px;">
-            + Add Habit
+          <button type="button" id="btn-add-edit-habit" class="btn-game-secondary btn-small" style="margin-top: 10px;">
+            + Add Micro-Habit
           </button>
         </div>
 
         <div class="modal-actions">
-          <button type="button" class="btn-secondary" id="cancel-edit-modal">Cancel</button>
-          <button type="submit" class="btn-primary">Save Changes</button>
+          <button type="button" class="btn-game-secondary" id="cancel-edit-modal">Cancel</button>
+          <button type="submit" class="btn-game-primary">Save Changes</button>
         </div>
       </form>
     </div>
@@ -183,67 +250,67 @@
 
   <!-- MODAL: Reset Progress Confirmation -->
   <div id="modal-reset" class="modal-overlay hidden" aria-hidden="true">
-    <div class="modal-content glass-card modal-small">
+    <div class="modal-content tactile-card modal-small">
       <div class="modal-header">
-        <h3>🔄 Reset All Progress?</h3>
-        <button class="modal-close" id="close-reset-modal">&times;</button>
+        <h3>🔄 Reset Bob's Sanctuary?</h3>
+        <button class="modal-close" id="close-reset-modal" aria-label="Close reset modal">&times;</button>
       </div>
       <div class="modal-body">
-        <p>This will erase your habits, current streaks, and reset <strong><span id="reset-pet-name">Spark</span></strong> back to adoption state.</p>
-        <p class="warning-text">⚠️ This action cannot be undone!</p>
+        <p>This will reset your habits, clear your streak flame trails, and return <strong><span id="reset-pet-name">Bob</span></strong> back to an egg state.</p>
+        <p class="warning-text">⚠️ Bob will miss his streak, but you can always restart fresh!</p>
       </div>
       <div class="modal-actions">
-        <button type="button" class="btn-secondary" id="cancel-reset-modal">Cancel</button>
-        <button type="button" class="btn-danger" id="confirm-reset-btn">Reset Everything</button>
+        <button type="button" class="btn-game-secondary" id="cancel-reset-modal">Keep Going</button>
+        <button type="button" class="btn-game-danger" id="confirm-reset-btn">Reset All</button>
       </div>
     </div>
   </div>
 
   <!-- MODAL: Info / How It Works -->
   <div id="modal-info" class="modal-overlay hidden" aria-hidden="true">
-    <div class="modal-content glass-card">
+    <div class="modal-content tactile-card">
       <div class="modal-header">
         <h3>❓ How Streak Guardian Works</h3>
-        <button class="modal-close" id="close-info-modal">&times;</button>
+        <button class="modal-close" id="close-info-modal" aria-label="Close info modal">&times;</button>
       </div>
       <div class="modal-body info-body">
         <div class="info-item">
+          <div class="info-icon">🐾</div>
+          <div>
+            <h4>Bob is Your Habit Mirror</h4>
+            <p>Bob's mood, appearance, and colors directly reflect how consistently you check off your micro-habits each day.</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">🔥</div>
+          <div>
+            <h4>Streak Flame Trails</h4>
+            <p>Every completed day lights a sacred flame in your 7-day reward trail. Today's flame pulses until you mark it done.</p>
+          </div>
+        </div>
+
+        <div class="info-item">
           <div class="info-icon">🌱</div>
           <div>
-            <h4>Consistency > Intensity</h4>
-            <p>Track 1 to 3 micro-habits daily. Micro-habits are intentionally small so you can maintain streaks even on tough days.</p>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon">👾</div>
-          <div>
-            <h4>Pet Mood Evolution</h4>
-            <p>Your Guardian's stage reflects your overall average streak strength:</p>
+            <h4>Evolution Tiers</h4>
             <ul class="pet-stages-legend">
-              <li><span class="legend-badge stage-0">Sleepy</span> 0-day avg streak (Missed days)</li>
-              <li><span class="legend-badge stage-1">Okay</span> 1-2 day avg streak (Getting started)</li>
-              <li><span class="legend-badge stage-2">Happy</span> 3-6 day avg streak (Building momentum)</li>
-              <li><span class="legend-badge stage-3">Excited</span> 7-11 day avg streak (1 week strong!)</li>
-              <li><span class="legend-badge stage-4">Thriving</span> 12+ day avg streak (Legendary status ✨)</li>
+              <li><span class="legend-badge stage-0">Sleepy 💤</span> 0d avg streak (Drowsy, desaturated slate)</li>
+              <li><span class="legend-badge stage-1">Waking 🌿</span> 1–2d avg streak (Fresh teal sprout)</li>
+              <li><span class="legend-badge stage-2">Happy ☀️</span> 3–6d avg streak (Warm sunny amber)</li>
+              <li><span class="legend-badge stage-3">Excited 🔥</span> 7–11d avg streak (Radiant coral flame)</li>
+              <li><span class="legend-badge stage-4">Thriving 👑</span> 12+d avg streak (Celestial starlight aura!)</li>
             </ul>
-          </div>
-        </div>
-
-        <div class="info-item">
-          <div class="info-icon">🛡️</div>
-          <div>
-            <h4>Fair Drop System</h4>
-            <p>Skipping a day reduces your average streak health, but doesn't punish you instantly to zero if you had a strong streak. Jump back in immediately to boost your pet!</p>
           </div>
         </div>
       </div>
       <div class="modal-actions">
-        <button type="button" class="btn-primary" id="btn-close-info">Got it!</button>
+        <button type="button" class="btn-game-primary" id="btn-close-info">Got it, let's play!</button>
       </div>
     </div>
   </div>
 
+  <!-- Audio Synthesizer & Logic Engine -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
